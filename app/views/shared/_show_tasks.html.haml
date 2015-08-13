@@ -1,0 +1,32 @@
+%table.table.table-striped.table-responsive
+  %thead
+    %tr
+      %th Name
+      %th Billable
+      %th Today's Logged Time
+      %th Actions
+  %tbody
+    - tasks.each do |task|
+      - task_time_log = task.time_log_for(current_user, Date.today)
+      %tr
+        %td= task.project.name + " - " +  task.name 
+        %td= task.is_billable.to_s
+        %td= ((task_time_log) ? distance_of_time_in_words(task_time_log.seconds.to_i) : "-")
+        %td
+          - if task_time_log
+            - if task_time_log.active_timer
+              =link_to "Stop", stop_timer_path(task_time_log.active_timer), class: "btn btn-danger"
+            - else
+              =form_for task_time_log.timers.build do |f|
+                =f.hidden_field :time_log_id
+                =f.hidden_field :start_time, value: Time.now
+                =f.submit "Resume", class: "btn btn-primary"
+
+
+          - else
+            = form_for task.time_logs.build do |f|
+              =f.hidden_field :user_id, value: current_user.id
+              =f.hidden_field :task_id
+              =f.submit "Start", class: "btn btn-success"
+
+

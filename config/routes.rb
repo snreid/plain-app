@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'timer/stop/:id', to: 'timers#stop', as: 'stop_timer'
   resources :timers
 
   resources :time_logs

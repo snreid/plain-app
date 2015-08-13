@@ -1,0 +1,27 @@
+%h1 Time Logs
+
+%table.table.table-responsive.table-striped
+  %thead
+    %tr
+      %th Project
+      %th Task
+      %th Date
+      %th Duration
+      %th Description
+      %th{ colspan: "3"}
+
+  %tbody
+    - @time_logs.each do |time_log| 
+      %tr
+        %td= time_log.task.project.name
+        %td= time_log.task.name
+        %td= time_log.date
+        %td= distance_of_time_in_words(time_log.seconds.to_i)
+        %td= time_log.description.to_s
+        %td= link_to 'Show', time_log 
+        %td= link_to 'Edit', edit_time_log_path(time_log) 
+        %td= link_to 'Destroy', time_log, method: :delete, data: { confirm: 'Are you sure?' } 
+
+.row &nbsp;
+
+= link_to 'New Time log', new_time_log_path

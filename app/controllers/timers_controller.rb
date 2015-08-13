@@ -1,5 +1,5 @@
 class TimersController < ApplicationController
-  before_action :set_timer, only: [:show, :edit, :update, :destroy]
+  before_action :set_timer, only: [:show, :edit, :update, :destroy, :stop]
 
   # GET /timers
   # GET /timers.json
@@ -28,7 +28,7 @@ class TimersController < ApplicationController
 
     respond_to do |format|
       if @timer.save
-        format.html { redirect_to @timer, notice: 'Timer was successfully created.' }
+        format.html { redirect_to tasks_path, notice: 'Timer was successfully started.' }
         format.json { render :show, status: :created, location: @timer }
       else
         format.html { render :new }
@@ -61,6 +61,15 @@ class TimersController < ApplicationController
     end
   end
 
+  def stop
+    if @timer.stop
+      flash[:success] = "Timer has been stopped."
+    else
+      flash[:error] = "Oops, unable to stop timer."
+    end
+    redirect_to :back
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_timer
@@ -69,6 +78,6 @@ class TimersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def timer_params
-      params[:timer]
+      params.require(:timer).permit(:start_time, :time_log_id)
     end
 end

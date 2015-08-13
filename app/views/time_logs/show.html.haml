@@ -1,0 +1,25 @@
+%h1= @time_log.task.name
+
+%h2= "Tracked Time for " + @time_log.date.to_s
+%table.table.table-responsive.table-striped
+  %thead
+    %th Start Time
+    %th End Time
+    %th Total
+  %tbody
+    - @time_log.timers.each do |timer|
+      %tr
+        %td= timer.start_time.to_s
+        %td= timer.end_time.to_s
+        %td= distance_of_time_in_words(timer.duration)
+
+    %tr
+      %td -
+      %td -
+      %td
+        %strong= distance_of_time_in_words(@time_log.seconds.to_i)
+
+
+= link_to 'Edit', edit_time_log_path(@time_log)
+&nbsp;|&nbsp;
+= link_to 'Back', time_logs_path 

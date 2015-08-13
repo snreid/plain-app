@@ -23,7 +23,7 @@
           %td= link_to 'Edit', edit_project_path(project) 
           %td= link_to 'Destroy', project, method: :delete, data: { confirm: 'Are you sure?' } 
 
-%br
+
 
 - if current_user.is_admin?
   = link_to 'New Project', new_project_path

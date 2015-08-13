@@ -4,7 +4,7 @@ class TasksController < ApplicationController
   # GET /tasks
   # GET /tasks.json
   def index
-    @tasks = Task.all
+    @tasks = current_user.time_logs.each.collect {|log| log.task}
   end
 
   # GET /tasks/1
@@ -69,6 +69,6 @@ class TasksController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def task_params
-      params[:task]
+      params.require(:task).permit(:project_id, :name, :is_billable)
     end
 end

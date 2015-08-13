@@ -4,7 +4,7 @@ class TimeLogsController < ApplicationController
   # GET /time_logs
   # GET /time_logs.json
   def index
-    @time_logs = TimeLog.all
+    @time_logs = current_user.time_logs.all.order(:date)
   end
 
   # GET /time_logs/1
@@ -25,10 +25,10 @@ class TimeLogsController < ApplicationController
   # POST /time_logs.json
   def create
     @time_log = TimeLog.new(time_log_params)
-
+    
     respond_to do |format|
       if @time_log.save
-        format.html { redirect_to @time_log, notice: 'Time log was successfully created.' }
+        format.html { redirect_to @time_log, notice: 'Timer was successfully started.' }
         format.json { render :show, status: :created, location: @time_log }
       else
         format.html { render :new }
@@ -69,6 +69,6 @@ class TimeLogsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def time_log_params
-      params[:time_log]
+      params.require(:time_log).permit(:task_id, :user_id, :date, :seconds, :description)
     end
 end

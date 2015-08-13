@@ -7,6 +7,11 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 require 'csv'
 
+user = User.find_or_create_by(email: "test@example.com")
+user.update(password: "password", first_name: "Test", last_name: "User")
+user.save
+
+
 csv_text = File.read([Rails.root.to_s, "lib", "Customers.csv"].join('/'))
 csv = CSV.parse(csv_text, :headers => true)
 csv.each do |row|
@@ -27,5 +32,22 @@ csv.each do |row|
   }
   c = Customer.find_or_create_by(params)
   c.update(params)
-
 end
+
+project_names = ["Test Project 1", "Test Project 2"]
+projects = []
+customer = Customer.first
+project_names.each do |name|
+  project = Project.find_or_create_by(name: name)
+  project.update({customer_id: customer.id, user_id: user.id})
+  projects << project
+end
+
+task_names = ["Test Task 1", "Test Task 2"]
+projects.each do |project|
+  task_names.each do |name|
+    task = Task.find_or_create_by({name: name, project_id: project.id, is_billable: true})
+  end
+  user.projects << project
+end
+

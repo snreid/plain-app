@@ -26,7 +26,10 @@
           %ul.nav.navbar-nav
             %li
               = link_to "My Projects", assigned_projects_path 
-                
+            %li
+              = link_to "Recent Tasks", tasks_path 
+            %li
+              = link_to "Logged Time", time_logs_path 
           %ul.nav.navbar-nav.navbar-right
             %li.dropdown
               %a.dropdown-toggle{ href: "#", "data-toggle"=>"dropdown", "role"=>"button", "aria-haspopup"=>"true", "aria-expanded"=>"false" }

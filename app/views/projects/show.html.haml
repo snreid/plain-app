@@ -2,18 +2,20 @@
 
 %h2 Tasks
 
-%table.table.table-striped.table-responsive
-  %thead
-    %tr
-      %th Name
-      %th Billable
-  %tbody
-    - @project.tasks.each do |task|
-      %tr
-        %td= task.name
-        %td= task.is_billable.to_s
+= render partial: "shared/show_tasks", locals: {tasks: @project.tasks}
+
+
+
+
 
 - if current_user.is_admin?
-  = link_to 'Edit', edit_project_path(@project) 
-  &nbsp;|&nbsp;
-= link_to 'Back', projects_path
+  .row
+    .col-md-12
+      =link_to "New Task", new_task_path, class: "btn btn-primary"
+      
+.row
+  .col-md-12
+    - if current_user.is_admin?
+      = link_to 'Edit', edit_project_path(@project) 
+      &nbsp;|&nbsp;
+    = link_to 'Back', projects_path
