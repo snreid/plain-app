@@ -1,0 +1,29 @@
+%p{id: "notice"}
+  = notice 
+
+%h1 Projects
+
+%table.table.table-striped
+  %thead
+    %tr
+      %th Name
+      %th Customer
+      %th Owner
+      %th{ colspan: "2"} 
+        Actions
+
+  %tbody
+    - @projects.each do |project| 
+      %tr
+        %td= link_to project.name, project
+        %td= project.customer.name
+        %td= project.owner.full_name
+
+        -if current_user.is_admin?
+          %td= link_to 'Edit', edit_project_path(project) 
+          %td= link_to 'Destroy', project, method: :delete, data: { confirm: 'Are you sure?' } 
+
+%br
+
+- if current_user.is_admin?
+  = link_to 'New Project', new_project_path

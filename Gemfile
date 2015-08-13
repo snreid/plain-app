@@ -9,6 +9,8 @@ gem 'sqlite3'
 gem 'sass-rails', '~> 5.0'
 
 gem 'bootstrap-sass'
+
+gem 'bootstrap-navbar'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .coffee assets and views
@@ -28,6 +30,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'haml'
 
 gem 'devise'
+
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

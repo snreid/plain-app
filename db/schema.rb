@@ -11,7 +11,67 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150809155401) do
+ActiveRecord::Schema.define(version: 20150813141857) do
+
+  create_table "customers", force: :cascade do |t|
+    t.string   "name"
+    t.string   "address_1"
+    t.string   "address_2"
+    t.string   "address_3"
+    t.string   "city"
+    t.string   "state"
+    t.string   "phone_1"
+    t.string   "phone_2"
+    t.string   "fax_1"
+    t.string   "fax_2"
+    t.string   "email"
+    t.string   "website"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string   "zip"
+  end
+
+  create_table "projects", force: :cascade do |t|
+    t.string   "name"
+    t.integer  "budget"
+    t.integer  "user_id"
+    t.integer  "customer_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  create_table "projects_users", id: false, force: :cascade do |t|
+    t.integer "project_id"
+    t.integer "user_id"
+  end
+
+  create_table "tasks", force: :cascade do |t|
+    t.string   "name"
+    t.boolean  "is_billable"
+    t.integer  "project_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  create_table "time_logs", force: :cascade do |t|
+    t.date     "date"
+    t.integer  "hours"
+    t.integer  "task_id"
+    t.string   "description"
+    t.integer  "user_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  create_table "timers", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "task_id"
+    t.date     "date"
+    t.time     "start_time"
+    t.time     "end_time"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -28,6 +88,7 @@ ActiveRecord::Schema.define(version: 20150809155401) do
     t.datetime "updated_at",                          null: false
     t.string   "first_name"
     t.string   "last_name"
+    t.boolean  "is_admin"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true

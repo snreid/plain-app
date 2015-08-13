@@ -22,5 +22,22 @@ module PlainApplication
 
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true
+
+    ActionView::Base.send :include, BootstrapNavbar::Helpers
+
+    BootstrapNavbar.configure do |config|
+      config.bootstrap_version = '3.2.0'
+      config.current_url_method = if Rails.version >= '3.2'
+                                      'request.original_url'
+                                    else
+                                      '[request.protocol, request.host_with_port, request.fullpath].join'
+                                    end
+    end
+  end
+end
+
+module BootstrapNavbar::Helpers
+  def prepare_html(html)
+    html.html_safe
   end
 end

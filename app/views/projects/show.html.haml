@@ -1,0 +1,19 @@
+%h1= @project.name
+
+%h2 Tasks
+
+%table.table.table-striped.table-responsive
+  %thead
+    %tr
+      %th Name
+      %th Billable
+  %tbody
+    - @project.tasks.each do |task|
+      %tr
+        %td= task.name
+        %td= task.is_billable.to_s
+
+- if current_user.is_admin?
+  = link_to 'Edit', edit_project_path(@project) 
+  &nbsp;|&nbsp;
+= link_to 'Back', projects_path
